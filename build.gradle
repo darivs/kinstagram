@@ -1,0 +1,84 @@
+buildscript {
+    ext {
+        gradleVersion = "5.6"
+        kotlinVersion = "1.3.50"
+        ktlintGradleVersion = "8.2.0"
+        junitVersion = "5.5.2"
+        detektVersion = "1.0.1"
+    }
+
+    repositories {
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlintGradleVersion"
+    }
+}
+
+apply plugin: "kotlin"
+apply plugin: "kotlin-jpa"
+apply plugin: "kotlin-kapt"
+apply plugin: "io.gitlab.arturbosch.detekt"
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+
+group = "de.constval"
+version = "1.0-SNAPSHOT"
+sourceCompatibility = "1.8"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+
+    testImplementation "org.junit.jupiter:junit-jupiter:$junitVersion"
+
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+ktlint {
+    reporters = [org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE]
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict", "-Xjvm-default=enable", "-Xnew-inference"]
+        allWarningsAsErrors = true
+        jvmTarget = "1.8"
+    }
+}
+
+detekt {
+    version = detektVersion
+
+    config = files("$projectDir/config/detekt/detekt.yml")
+    input = files("$projectDir/src/main/kotlin")
+
+    failFast = true
+
+    reports {
+        xml.destination = file("$buildDir/reports/detekt/detekt.xml")
+        html.destination = file("$buildDir/reports/detekt/detekt.html")
+    }
+}
+
+wrapper {
+    gradleVersion = project.ext.gradleVersion
+}

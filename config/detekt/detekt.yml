@@ -1,0 +1,47 @@
+potential-bugs:
+  UnsafeCast:
+    active: false
+  LateinitUsage:
+    active: false
+
+performance:
+  SpreadOperator:
+    active: false
+
+style:
+  ForbiddenComment:
+    values: "FIXME:,STOPSHIP:"
+  ForbiddenVoid:
+    active: false
+  DataClassContainsFunctions:
+    active: false
+  ThrowsCount:
+    active: false
+  ReturnCount:
+    active: false
+
+exceptions:
+  SwallowedException:
+    active: false
+
+empty-blocks:
+  EmptyFunctionBlock:
+    ignoreOverriddenFunctions: true
+
+naming:
+  FunctionMaxLength:
+    active: false
+  MatchingDeclarationName:
+    active: false
+
+comments:
+  UndocumentedPublicFunction:
+    active: false
+  UndocumentedPublicClass:
+    active: false
+
+complexity:
+  StringLiteralDuplication:
+    active: false
+  ComplexMethod:
+    threshold: 20
