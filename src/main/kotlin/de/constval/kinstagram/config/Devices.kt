@@ -1,4 +1,4 @@
-package de.constval.kinstagram
+package de.constval.kinstagram.config
 
 class Devices {
     companion object {
@@ -63,15 +63,15 @@ class Devices {
             "qcom"
         )
     }
-
-    data class Device(
-        val ANDROID_VERSION: String,
-        val ANDROID_RELEASE: String,
-        val DPI: String,
-        val RESOLUTION: String,
-        val MANUFACTURER: String,
-        val MODEL: String,
-        val NAME: String,
-        val CPU: String
-    )
 }
+
+data class Device(
+    val ANDROID_VERSION: String,
+    val ANDROID_RELEASE: String,
+    val DPI: String,
+    val RESOLUTION: String,
+    val MANUFACTURER: String,
+    val MODEL: String,
+    val NAME: String,
+    val CPU: String
+)
