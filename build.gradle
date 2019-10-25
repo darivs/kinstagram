@@ -5,7 +5,7 @@ buildscript {
         ktlintGradleVersion = "8.2.0"
         junitVersion = "5.5.2"
         detektVersion = "1.0.1"
-        khttpVersion = "0.1.0"
+        okhttpVersion = "4.2.1"
     }
 
     repositories {
@@ -38,10 +38,9 @@ repositories {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation "org.jetbrains.kotlin:kotlin-reflect"
-    implementation "com.github.jkcclemens:khttp:$khttpVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
 
     testImplementation "org.junit.jupiter:junit-jupiter:$junitVersion"
-
 }
 
 compileKotlin {
@@ -83,10 +82,4 @@ detekt {
 
 wrapper {
     gradleVersion = project.ext.gradleVersion
-}
-
-allprojects {
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
 }
