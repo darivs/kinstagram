@@ -1,10 +1,11 @@
 # kinstagram
-:fire: Kotlin client with Instagram's private API
+:fire: A client for Instagram's private API on Kotlin 
 
 :pencil2: In development
 
-:scissors: Based on [levpasha/instagram-api-python](https://github.com/LevPasha/Instagram-API-python), [mgp25/instagram-api](https://github.com/mgp25/Instagram-API
-) and [brunocvcunha/instagram4j](https://github.com/brunocvcunha/instagram4j)
+:scissors: Based on [@brunocvcunha/instagram4j](https://github.com/brunocvcunha/instagram4j) 
+
+:heart: Thanks to [this medium article](https://medium.com/@okhlopkov/use-private-instagram-api-for-free-faaaa527274f) for my finally motivation
 
 ## :clipboard: Terms and conditions
 
