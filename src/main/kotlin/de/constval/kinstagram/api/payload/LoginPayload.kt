@@ -10,17 +10,9 @@ data class LoginPayload(
     val username: String,
     val password: String
 ) {
-    constructor(username: String, password: String, phone_id: String, guid: String) : this(
-        device_id = generateDeviceId(username, password),
-        phone_id = phone_id,
-        guid = guid,
-        username = username,
-        password = password
-    )
-
     constructor(username: String, password: String) : this(
-        device_id = generateDeviceId(username, password),
         phone_id = generateUuid(),
+        device_id = generateDeviceId(username, password),
         guid = generateUuid(),
         username = username,
         password = password
