@@ -1,26 +1,15 @@
 package de.constval.kinstagram
 
-import de.constval.kinstagram.request.Api
-import okhttp3.FormBody
-import okhttp3.RequestBody
+import de.constval.kinstagram.api.Api
+import de.constval.kinstagram.api.response.LoginResponse
+import retrofit2.Response
 
 class Client(
-    private val username: String,
-    private val password: String
+    private val api: Api = Api()
 ) {
-    private val api = Api()
+    fun login(username: String, password: String): Response<LoginResponse> {
+        val response = api.login(username, password)
 
-    fun login(): String? {
-        val requestBody: RequestBody = FormBody.Builder()
-            .add("phone_id", "#####")
-            .add("device_id", "#####")
-            .add("guid", "#####")
-            .add("username", username)
-            .add("password", password)
-            .build()
-
-        val response = api.post(url = "accounts/login/", data = requestBody)
-
-        return response.body?.string()
+        return response
     }
 }

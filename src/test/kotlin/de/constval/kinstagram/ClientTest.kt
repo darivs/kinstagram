@@ -1,18 +1,14 @@
 package de.constval.kinstagram
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.jupiter.api.Test
 
-internal class ClientTest {
-    private val mapper = jacksonObjectMapper()
-
+class ClientTest {
     @Test
-    fun that_login_fails_with_wrong_password() {
-        val client = Client("bar", "foo")
+    fun that_login_with_invalid_credentials_throws_400() {
+        val client = Client()
 
-        val response = client.login()
-        val body = mapper.readValue(response, Map::class.java)
+        val response = client.login(username = "", password = "")
 
-        assert(body["error_type"] == "bad_password")
+        assert(response.code() == 400)
     }
 }
