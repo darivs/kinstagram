@@ -1,8 +1,17 @@
 package de.constval.kinstagram.util
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import de.constval.kinstagram.util.Constants.Companion.HEX_CHARS
+import de.constval.kinstagram.util.Constants.Companion.SIG_KEY
+import de.constval.kinstagram.util.Constants.Companion.SIG_KEY_VERSION
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.util.*
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
+
+private val mapper = jacksonObjectMapper()
 
 fun generateUuid(): String {
     return UUID.randomUUID().toString()
@@ -31,4 +40,26 @@ fun ByteArray.hex(): String {
     }
 
     return result.toString()
+}
+
+fun Any.generateSignature(): String {
+    val objectAsJson = mapper.writeValueAsString(this)
+
+    val parsed = URLEncoder.encode(objectAsJson, "utf-8")
+    val signedBody = hmacSHA256(objectAsJson)
+
+    return "ig_sig_key_version=$SIG_KEY_VERSION&signed_body=$signedBody.$parsed"
+}
+
+fun hmacSHA256(payload: String): String? = try {
+    val algorithm = "HmacSHA256"
+
+    Mac
+        .getInstance(algorithm)
+        .run {
+            init(SecretKeySpec(SIG_KEY.toByteArray(), algorithm))
+            doFinal(payload.toByteArray(StandardCharsets.UTF_8))
+        }.hex()
+} catch (e: Exception) {
+    throw Exception(e)
 }

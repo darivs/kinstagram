@@ -5,7 +5,7 @@ class Constants {
         const val BASE_URL = "https://i.instagram.com/api/v1/"
         const val SIG_KEY = "f372b2a5f14d1bebedaaa4ac6f8d506db30ffdd6185b8e0cdfa7dab42f5a9cc6"
         const val SIG_KEY_VERSION = "4"
-        const val HEX_CHARS = "0123456789ABCDEF"
+        const val HEX_CHARS = "0123456789abcdef"
         const val APP_VERSION = "22.0.0.15.68"
         const val LOCALE = "de_DE"
 
