@@ -25,6 +25,7 @@ class HashTest {
     fun that_generated_signature_is_correct() {
         val payload = LoginPayload(
             phone_id = "681f1617-9d3b-490d-a635-08f7075a5f66",
+            device_id = generateDeviceId("USERNAME", "PASSWORD"),
             guid = "702bd670-85ce-4a5a-90be-786f5db5162c",
             username = "USERNAME",
             password = "PASSWORD"
@@ -33,10 +34,10 @@ class HashTest {
         val generatedSignature = payload.generateSignature()
 
         val correctSignature =
-            "ig_sig_key_version=4&signed_body=4f7cd7f03868270a8ccf502f9fced538c607364e0b373e757aa52def90296e60.%7B%22" +
-                    "phone_id%22%3A%22${payload.phone_id}%22%2C%22device_id%22%3A%22android-7eb57ab90e1e2c3e%22%2C%22" +
-                    "guid%22%3A%22${payload.guid}%22%2C%22username%22%3A%22${payload.username}%22%2C%22password%22%3A" +
-                    "%22${payload.password}%22%7D"
+            "ig_sig_key_version=4&signed_body=4f7cd7f03868270a8ccf502f9fced538c607364e0b373e757aa52def90296e60.%7B%2" +
+                    "2phone_id%22%3A%22${payload.phone_id}%22%2C%22device_id%22%3A%22${payload.device_id}%22%2C%22gu" +
+                    "id%22%3A%22${payload.guid}%22%2C%22username%22%3A%22${payload.username}%22%2C%22password%22%3A%" +
+                    "22${payload.password}%22%7D"
         assert(generatedSignature.equals(correctSignature))
     }
 }

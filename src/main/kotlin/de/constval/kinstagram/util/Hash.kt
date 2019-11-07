@@ -13,9 +13,7 @@ import javax.crypto.spec.SecretKeySpec
 
 private val mapper = jacksonObjectMapper()
 
-fun generateUuid(): String {
-    return UUID.randomUUID().toString()
-}
+fun generateUuid(): String = UUID.randomUUID().toString()
 
 fun generateDeviceId(username: String, password: String): String {
     val hash = digest("MD5", username + password)
@@ -45,21 +43,19 @@ fun ByteArray.hex(): String {
 fun Any.generateSignature(): String {
     val objectAsJson = mapper.writeValueAsString(this)
 
-    val parsed = URLEncoder.encode(objectAsJson, "utf-8")
+    val parsed = URLEncoder.encode(objectAsJson, StandardCharsets.UTF_8)
     val signedBody = hmacSHA256(objectAsJson)
 
     return "ig_sig_key_version=$SIG_KEY_VERSION&signed_body=$signedBody.$parsed"
 }
 
-fun hmacSHA256(payload: String): String? = try {
+fun hmacSHA256(payload: String): String? {
     val algorithm = "HmacSHA256"
 
-    Mac
+    return Mac
         .getInstance(algorithm)
         .run {
             init(SecretKeySpec(SIG_KEY.toByteArray(), algorithm))
             doFinal(payload.toByteArray(StandardCharsets.UTF_8))
         }.hex()
-} catch (e: Exception) {
-    throw Exception(e)
 }
